@@ -1,29 +1,30 @@
 
 var list = [
-	   "/",
-       "index.html",
-	   "manifest.json",
-	   
-	   "code/pp/pp.js",
-	   "code/dbs/DBS.js",
-	   "code/ext/ext.js",
-	   "code/ext/hb.wasm",
-	   "code/ext/fribidi.wasm",
-	   
-	   "rsrc/basic/basic.zip",
-	   "rsrc/basic/fa_basic.csh",
-	   "rsrc/fonts/fs/DejaVuSans.otf",
-	   "rsrc/fonts/fonts.png",
-	   
-	   "plugins/gallery.json",
-	   
-	   "style/all.css",
-	   "promo/icon512.png",
-	   
-	   "rsrc/fonts/ex/opensans/mem8YaGs126MiZpBA-UFVZ0b.woff2",
-	   "rsrc/fonts/ex/opensans/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2",
-	   "https://fonts.gstatic.com/s/opensans/v20/mem8YaGs126MiZpBA-UFVZ0b.woff2",
-	   "https://fonts.gstatic.com/s/opensans/v20/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2"
+		"/",
+		"index.html",
+		"manifest.json",
+		"custom.js",
+
+		"code/pp/pp.js",
+		"code/dbs/DBS.js",
+		"code/ext/ext.js",
+		"code/ext/hb.wasm",
+		"code/ext/fribidi.wasm",
+
+		"rsrc/basic/basic.zip",
+		"rsrc/basic/fa_basic.csh",
+		"rsrc/fonts/fs/DejaVuSans.otf",
+		"rsrc/fonts/fonts.png",
+
+		"plugins/gallery.json",
+
+		"style/all.css",
+		"promo/icon512.png",
+
+		"rsrc/fonts/ex/opensans/mem8YaGs126MiZpBA-UFVZ0b.woff2",
+		"rsrc/fonts/ex/opensans/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2",
+		"https://fonts.gstatic.com/s/opensans/v20/mem8YaGs126MiZpBA-UFVZ0b.woff2",
+		"https://fonts.gstatic.com/s/opensans/v20/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2"
 ];
 
 self.addEventListener("fetch", function(event) {
