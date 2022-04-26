@@ -1,0 +1,142 @@
+﻿
+<!DOCTYPE html> 
+
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0" />
+		
+		<style>
+			body {  background-color:#474747;  overflow:hidden;  }
+			label { color:white;  font-family:sans-serif; font-size:0.8em; }
+			img { margin-right:4px;  cursor:pointer;  }
+			button {  padding:0 4px;  }
+			#cont {
+				margin-top:4px;
+				overflow-y: scroll;
+				/* for Firefox: */
+				scrollbar-color: #222222 rgba(0,0,0, 0.2 );
+				scrollbar-width: thin;
+			}
+			#cont::-webkit-scrollbar {
+			  width: 10px;
+			  background: rgba(0,0,0,0.2); 
+			}
+			#cont::-webkit-scrollbar-thumb {
+				background: #222222; 
+				margin:2px;
+			}
+		</style>
+		<script>
+			var imgs = [], hits = [], done=0;
+			
+			var UNS = location.href.indexOf("uns")!=-1, PAGE=1, sTop=-1, cont, keyws;
+		
+			function update(page) {
+				cont  = document.getElementById("cont");
+				keyws = document.getElementById("keyws");
+				if(page==null) {  PAGE=1;  hits=[];  sTop=-1;  }
+				else {  PAGE = page;  sTop=cont.scrollTop;  }
+				
+				var ikey = keyws.value;
+				if(document.getElementById("isolated").checked) ikey += " isolated";
+				ikey = ikey.trim();
+				console.log(JSON.stringify(ikey));
+				
+				var url;
+				if(!UNS) {
+					url = "https://pixabay.com/api/?image_type=photo"+(ikey==""?"":"&q="+encodeURIComponent(ikey))+"&per_page="+100+"&page="+PAGE+"&key=10554583-a5eacb61c2e61105fdfb6eb88&safesearch=true"; 
+				}
+				else {
+					//var keys = ["lake", "mountains", "tree"];  if(ikey=="") ikey=keys[Math.floor(Math.random()*keys.length)];
+					url = "https://api.unsplash.com/search/photos?per_page="+30+"&query="+encodeURIComponent(ikey)+"&page="+PAGE;
+				}
+				var fnam = "gallery"+(UNS?"1":"");
+				if(ikey=="") {
+					if(!UNS && Math.random()<0.005) url="gallery.php?url="+encodeURIComponent(url)+"&fnam="+fnam;//+"&r="+Math.random();
+					else url=fnam+".json";
+				}
+				console.log(url);
+				
+				
+				var req = new XMLHttpRequest();
+				req.open("GET", url, true);
+				if(UNS) req.setRequestHeader("Authorization", "Client-ID 3twt3nS_LYzp4nViMBB3tmWU0F-wyHUpgfrG1nIuiYs");
+				req.onload = imgsLoaded.bind(this);
+				req.onerror = function(e) {  console.log(e.target.response);  }
+				req.send();
+			}
+			function imgsLoaded(e) {
+				//console.log(e.target.response);
+				var obj = JSON.parse(e.target.response);  //console.log(obj);
+				var list = obj["hits"]?obj["hits"]:obj["results"];  
+				
+				hits = hits.concat(list);
+			
+				var iw = window.innerWidth-29, th=100;
+				cont.setAttribute("style","height:"+(window.innerHeight-42)+"px;");
+				while(cont.firstChild) cont.removeChild(cont.firstChild);
+				cont.scrollTop = 0;
+				
+				//for(var i=0; i<hits.length; i++) if(hits[i]["user_id"]==6314823) hits.splice(i,1);
+				var heis = [];
+				for(var i=0; i<hits.length; ) {
+					var totw = 0, j=i;
+					while(j<hits.length) {
+						var hit = hits[j], w=hit["previewWidth"], h=hit["previewHeight"];
+						if(w==null) {  w=hit["width"];  h=hit["height"];  }
+
+						var nw=w*(th/h);
+						if(j<=i+1 || totw+nw < iw) {  totw+=nw;  j++;  }
+						else break;
+					}
+					var num = j-i;
+					while(i<j) {
+						heis.push(Math.min(th*2,th*((iw-num*4)/totw)));  i++;
+					}
+				}
+				
+				imgs=[];
+				
+				for(var i=0; i<hits.length; i++) {
+					var hit = hits[i];
+					var img = document.createElement("img");
+					img.setAttribute("src",hit["previewURL"]?hit["previewURL"]:hit["urls"]["thumb"]);
+					img.setAttribute("height",heis[i]+"px");
+					img.addEventListener("click", imgClick);
+					cont.appendChild(img);
+					imgs.push(img);
+				}
+				if(sTop!=-1) cont.scrollTop=sTop;
+				
+				cont.appendChild(document.createElement("br"));
+				var more = document.createElement("button");
+				more.onclick = function(e) {  update(PAGE+1);  }
+				more.textContent="Load More";
+				if(keyws.value!="") cont.appendChild(more);
+				
+				console.log(hits);
+			}
+			function imgClick(e) {
+				var ind = imgs.indexOf(e.currentTarget);
+				var hit = hits[ind];  console.log(hit);
+				var url = hit["largeImageURL"];  if(url==null) url = hit["urls"]["full"];
+				var x = "app.open(\""+url+"\",null,true);";
+				window.parent.postMessage(x, "*");
+			}
+			function msg(e) {  alert("These images come from www."+(UNS?"Unsplash":"PixaBay")+".com and are free to use for any purpose.");  }
+			
+			window.onresize = update;
+		</script>
+	</head>
+	
+	<body onload="update()">
+		<div style="height:22px; overflow:hidden;">
+		<button onclick="msg()">?</button>
+		<label>Keywords:</label> <input type="text" id="keyws" onchange="update()" value=""></input>
+		<input type="checkbox" id="isolated" style="vertical-align:middle;" onchange="update()" /> <label for="isolated">Isolated</label>
+		</div>
+		
+		<div id="cont"></div>
+	</body>
+</html>
