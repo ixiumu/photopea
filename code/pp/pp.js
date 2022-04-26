@@ -12707,7 +12707,7 @@ this.m("mouse",this.a0N,this);this.m(O.E.u,this.LB,this);this.m(O.E.EE,this.arB,
 window.addEventListener("keyup",this.a1.bind(this),!1);window.addEventListener("paste",this.acO.bind(this),!1);
 window.addEventListener("copy",this.aoq.bind(this),!1);window.addEventListener("wheel",function(d){if(d.ctrlKey)d.preventDefault()},{passive:!1});
 window.addEventListener("beforeinstallprompt",function(d){if(window.innerWidth>400)d.preventDefault();
-this.YJ.mK=d}.bind(this));if(window.location.href.indexOf("photopea.com")!=-1&&"serviceWorker"in navigator){navigator.serviceWorker.register("sw.js",{scope:"./"}).then(function(d){if(d.aof){console.log("Service worker installing")}else if(d.ad2){console.log("Service worker installed")}else if(d.active){console.log("Service worker active")}}).catch(function(d){console.log("Registration failed with "+d)})}this.x7=0;
+this.YJ.mK=d}.bind(this));if(window.location.href.indexOf("https://")!=-1&&"serviceWorker"in navigator){navigator.serviceWorker.register("sw.js",{scope:"./"}).then(function(d){if(d.aof){console.log("Service worker installing")}else if(d.ad2){console.log("Service worker installed")}else if(d.active){console.log("Service worker active")}}).catch(function(d){console.log("Registration failed with "+d)})}this.x7=0;
 this.In=[];this.Fg=new b7(cs.l$);this.Fg.parent=this;var E=this.nr,t=this.tz=N.L("div");t.appendChild(this.BD.h);
 t.appendChild(this.qd.h);this.GC.as4(t);var R=this.anJ=N.L("div","flexrow");E.appendChild(R);R.appendChild(this.QM.h);
 R.appendChild(this.LP.h);R.appendChild(this.xu.h);this.Fg.TB({url:"rsrc/basic/basic.zip"});this.$M(m.dj);
