@@ -1,6 +1,6 @@
 
 var list = [
-	   "",
+	   "/",
        "index.html",
 	   "manifest.json",
 	   
@@ -26,28 +26,21 @@ var list = [
 	   "https://fonts.gstatic.com/s/opensans/v20/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2"
 ];
 
-self.addEventListener("fetch", function (event) {
+self.addEventListener("fetch", function(event) {
 	event.respondWith(
-		fetch(event.request)
-			.catch(function() {
-				return caches.match(event.request)
-			})
-			.then(function (response) {
-				var url=event.request.url;
-				var fnd=false;
-				for(var i=0; i<list.length; i++) if(  list[i]==url  ||
-					window.location.origin+window.location.pathname+list[i]==url) fnd=true;
-				
-				for(var i=0; i<=40; i++) if(url.endsWith("code/lang/"+i+".js")) fnd=true;
-				
-				if(fnd) {
-					var rcl = response.clone();
-					caches.open("photopea").then(function(cache) {
-						cache.put(event.request, rcl);
-					});
-				}
+	  caches.match(event.request).then(function(resp) {
+		return resp || fetch(event.request).then(function(response) {
+			var url=event.request.url;
+			var fnd=false;
+			for(var i=0; i<list.length; i++) if( list[i]==url || url.endsWith(list[i]) ) fnd=true;
+			for(var i=0; i<=40; i++) if(url.endsWith("code/lang/"+i+".js")) fnd=true;
+			if (!fnd) return response;
+			return caches.open('cache-v1').then(function(cache) {
+				cache.put(event.request, response.clone());
 				return response;
-			})
-	)
-})
+			});
+		});
+	  })
+	);
+});
 
