@@ -1,0 +1,40 @@
+{
+	"name": "Photopea",
+	"short_name": "Photopea",
+	"display": "standalone",
+	"icons": [
+		{  "src": "promo/icon512.png",     "type": "image/png", "sizes": "512x512"  },
+		{  "src": "promo/maskable512.png", "type": "image/png", "sizes": "512x512", "purpose":"maskable"  }  
+	],
+	"start_url": "/?utm_source=homescreen",
+	"background_color":"#0f171d",
+	"theme_color": "#474747",
+	"file_handlers": [
+		{ "action": "/", "accept": {  "image/psd" : [ ".psd" ]  } },
+		{ "action": "/", "accept": {  "image/jpeg": [ ".jpeg", ".jpg" ]  } },
+		{ "action": "/", "accept": {  "image/png" : [ ".png" ]  } },
+		{ "action": "/", "accept": {  "image/webp": [ ".webp" ]  } },
+		{ "action": "/", "accept": {  "image/bmp" : [ ".bmp" ]  } },
+		{ "action": "/", "accept": {  "image/gif" : [ ".gif" ]  } },
+		{ "action": "/", "accept": {  "image/svg+xml": [ ".svg" ]  } },
+		{ "action": "/", "accept": {  "image/pdf" : [ ".pdf" ]  } },
+		{ "action": "/", "accept": {  "image/tiff": [ ".tif", ".tiff" ]  } },
+		{ "action": "/", "accept": {  "image/ai"  : [ ".ai"  ]  } },
+		
+		{ "action": "/", "accept": {  "image/psb": [ ".psb" ]  } },
+		{ "action": "/", "accept": {  "image/xcf": [ ".xcf" ]  } },
+		{ "action": "/", "accept": {  "image/sketch": [ ".sketch" ]  } },
+		{ "action": "/", "accept": {  "image/xd" : [ ".xd"  ]  } },
+		{ "action": "/", "accept": {  "image/pxd": [ ".pxd" ]  } },
+		{ "action": "/", "accept": {  "image/cdr": [ ".cdr" ]  } },
+		{ "action": "/", "accept": {  "image/eps": [ ".eps", ".ps" ]  } },
+		
+		
+		{ "action": "/", "accept": {  "image/x-icon": [ ".ico" ]  } },
+		{ "action": "/", "accept": {  "image/jpx": [ ".jpx" ]  } },
+		{ "action": "/", "accept": {  "image/jp2": [ ".jp2" ]  } },
+		
+		{ "action": "/", "accept": {  "image/x-tga": [ ".tga" ]  } }
+		
+	]
+}
